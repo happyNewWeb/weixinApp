@@ -70,6 +70,7 @@
 				this.x = x > this.maxX ? this.maxX : x
 				this.y = y > this.maxY ? this.maxY : y
 				this.status = true
+				//动画
 				// #ifdef APP-PLUS-NVUE
 				this.$nextTick(() => {
 					animation.transition(this.$refs.mypop, {
