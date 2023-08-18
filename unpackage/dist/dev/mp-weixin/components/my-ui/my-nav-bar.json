@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "my-icon-button": "/components/my-ui/my-icon-button"
+  }
+}

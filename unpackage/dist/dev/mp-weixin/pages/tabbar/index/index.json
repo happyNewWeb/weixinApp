@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "my-chat-list": "/components/my-ui/my-chat-list",
+    "my-nav-bar": "/components/my-ui/my-nav-bar",
+    "my-pop-up": "/components/my-ui/my-pop-up"
+  }
+}

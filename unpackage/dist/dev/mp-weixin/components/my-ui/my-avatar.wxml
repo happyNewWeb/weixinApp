@@ -1,0 +1,1 @@
+<view><image class="{{[type]}}" style="{{(getStyle)}}" src="{{src}}" mode="aspectFill"></image></view>

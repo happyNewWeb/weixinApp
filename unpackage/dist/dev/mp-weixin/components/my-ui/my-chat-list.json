@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "my-avatar": "/components/my-ui/my-avatar",
+    "my-badge": "/components/my-ui/my-badge"
+  }
+}

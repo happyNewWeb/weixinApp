@@ -1,0 +1,107 @@
+<template>
+	<view>
+		<!-- 导航栏 -->
+		<MyNavBar title="微信" :noreadnum="20" @search="search" :fixed="true"></MyNavBar>
+		<!-- 列表 -->
+		<block v-for="(item,index) in list" :key="index">
+			<MyChatList :item="item" @long="long"></MyChatList>
+		</block>
+		<!-- 弹出层 -->
+		<MyPopUp ref="pop" :mask-color="false" :body-height="getMenuStyle" :body-width="240">
+			<view class="flex pt-1 pb-1 flex-column overflow-hidden" :style="getMenuStyle" style="width: 240rpx;">
+				<view v-for="(item,index) in menu" @click="click(item.event)" :key="item.name" 
+				      hover-class="bg-secondary" 
+					  class="flex-1 flex align-center justify-center overflow-hidden">
+				   <text class="font-sm">{{item.name}}</text>	
+				</view>
+			</view>
+		</MyPopUp>
+	</view>
+</template>
+
+<script>
+	import MyChatList from '@/components/my-ui/my-chat-list.vue'
+	import MyNavBar from '@/components/my-ui/my-nav-bar.vue'
+    import MyPopUp from '../../../components/my-ui/my-pop-up.vue'
+	export default {
+		components: {
+			MyChatList,
+			MyNavBar,
+			MyPopUp
+		},
+		data() {
+			return {
+				menu:[
+					{
+						name:'设为置顶',
+						event:'setTop'
+					},
+					{
+						name:'取消置顶',
+						event:''
+					},
+					{
+						name:'删除聊天',
+						event:'deleteChat'
+					}
+				],
+				list: [{
+					avatar: "/static/images/images/bg.jpg",
+					nickname: "棒棒糖的幸福",
+					update_time: 1691589231,
+					data: '吃饭了吗?',
+					num:1
+				}, {
+					avatar: "/static/images/images/star.png",
+					nickname: "棒棒糖的幸福",
+					update_time: new Date().getTime(),
+					data: '今天无论如何必须去公司',
+					num:10
+				}, {
+					avatar: "/static/images/images/userpic.png",
+					nickname: "棒棒糖的幸福",
+					update_time: new Date().getTime(),
+					data: '也许吧',
+					num:10
+				}, {
+					avatar: "/static/images/images/userpic.png",
+					nickname: "棒棒糖的幸福",
+					update_time: new Date().getTime(),
+					data: '也许吧',
+					num:10
+				}]
+			}
+		},
+		computed:{
+			//动态获取菜单高度
+			getMenuHeight(){
+				let height = 80
+				return this.menu.length * height
+			},
+			//动态获取菜单样式
+			getMenuStyle(){
+				return `height:${this.getMenuHeight}rpx`
+			}
+		},
+		methods:{
+			search(){
+				this.$refs.pop.show(200,200)
+			},
+			long({x,y}){
+				this.$refs.pop.show(x,y)
+			},
+			click(event){
+				switch (event){
+					case 'setTop':
+						break;
+					case 'deleteChat':
+						break;
+				}
+			}
+		},
+	}
+</script>
+
+<style>
+
+</style>

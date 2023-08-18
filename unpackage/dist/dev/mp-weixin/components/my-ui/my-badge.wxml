@@ -1,0 +1,1 @@
+<text class="{{['my-badge','bg-danger','text-white','rounded-circle','data-v-9fc11a92',badgeClass]}}" style="{{(badgeStyle)}}">{{num>99?'99+':num}}</text>
