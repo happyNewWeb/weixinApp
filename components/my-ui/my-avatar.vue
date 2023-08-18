@@ -24,7 +24,7 @@
 			getStyle(){
 				return `width:${this.size}rpx;height:${this.size}rpx`
 			}
-		}
+		},
 	}
 </script>
 
