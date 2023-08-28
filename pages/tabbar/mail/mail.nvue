@@ -1,18 +1,53 @@
 <template>
-	<view>
-		
-	</view>
+	<!-- 头部 -->
+	<MyNavBar title="通讯录"></MyNavBar>
+	<!-- 列表 -->
+    <MyListItem v-for="(item,index) in mailList" 
+	            :key="index" 
+				@click="click(item.event)" 
+				:title="item.title" 
+				:img-url="item.imgUrl">
+	</MyListItem>
 </template>
 
 <script>
+	import MyNavBar from '@/components/my-ui/my-nav-bar.vue'
+	import MyListItem from '@/components/my-ui/my-list-item.vue'
 	export default {
+		components:{
+			MyNavBar,
+			MyListItem
+		},
 		data() {
 			return {
-				
+				mailList:[
+					{
+						imgUrl:'/static/images/images/mail/friend.png',
+						title:'新的朋友',
+						event:''
+					},
+					{
+						imgUrl:'/static/images/images/mail/group.png',
+						title:'群聊标签',
+						event:''
+					},
+					{
+						imgUrl:'/static/images/images/mail/tag.png',
+						title:'标签',
+						event:''
+					}
+				]
 			}
 		},
 		methods: {
-			
+			click(event){
+				switch(event){
+					case '':
+					   break;
+					case '':
+					   break;
+				}
+			}
 		}
 	}
 </script>

@@ -14,51 +14,92 @@
 				</view>
 				<!-- 右边 -->
 				<view class="flex">
-					<my-icon-button :icon="'\ue6e3'" @xxx="ccc"></my-icon-button>
-					<my-icon-button @click="$emit('search')" :icon="'\ue682'"></my-icon-button>
+					<my-icon-button :icon="'\ue6e3'"></my-icon-button>
+					<my-icon-button @click="openExtend" :icon="'\ue682'"></my-icon-button>
 				</view>
 			</view>
 		</view>
 		<!-- 占位 -->
 		<view v-if="fixed" :style="fixedStyle"></view>
+		<!-- 扩展菜单 -->
+		<MyPopUp ref="extend" origin-drop="center center" body-bg-color="bg-dark" :mask-color="false" :body-height="525"
+			:body-width="320">
+			<view class="flex pt-1 pb-1 flex-column" style="width: 320rpx;height: 525rpx;">
+				<view v-for="(item,index) in myExtends" @click="click(item.event)" :key="item.name"
+					hover-class="bg-hover-dark" class="flex-1 flex align-center">
+					<text class="iconfont font-md text-white pl-3">{{item.icon}}</text>
+					<text class="font-md pl-3 text-white">{{item.name}}</text>
+				</view>
+			</view>
+		</MyPopUp>
 	</view>
 </template>
 
 <script>
 	import MyIconButton from '@/components/my-ui/my-icon-button.vue'
+	import MyPopUp from './my-pop-up.vue'
 	export default {
 		components: {
-			MyIconButton
+			MyIconButton,
+			MyPopUp
 		},
 		props: {
 			title: {
 				type: [String, Boolean],
 				default: ''
 			},
-			fixed:{
+			fixed: {
 				type: [Boolean],
 				default: true
 			},
-			noreadnum:{
-				type:Number,
-				default:0
+			noreadnum: {
+				type: Number,
+				default: 0
 			}
 		},
 		data() {
 			return {
 				statusBarHeight: 0,
-				navBarHeight: 0
+				navBarHeight: 0,
+				myExtends: [{
+						name: '发起群聊',
+						event: '',
+						icon:'\ue633'
+					},
+					{
+						name: '添加好友',
+						event: '',
+						icon:'\ue65d'
+					},
+					{
+						name: '扫一扫',
+						event: '',
+						icon:'\ue614'
+					},
+					{
+						name: '首付款',
+						event: '',
+						icon:'\ue667'
+					},
+					{
+						name: '帮助与反馈',
+						event: '',
+						icon:'\ue61c'
+					}
+				],
 			}
 		},
 		methods: {
-
+			openExtend() {
+				this.$refs.extend.show(uni.upx2px(415), uni.upx2px(150))
+			}
 		},
 		computed: {
 			fixedStyle() {
 				return `height:${this.navBarHeight}px`
 			},
-			getTitle(){
-				return this.noreadnum > 0 ? `${this.title}(${this.noreadnum})` : `${this.title}`; 
+			getTitle() {
+				return this.noreadnum > 0 ? `${this.title}(${this.noreadnum})` : `${this.title}`;
 			}
 		},
 		mounted() {

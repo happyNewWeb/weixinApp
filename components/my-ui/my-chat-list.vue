@@ -1,5 +1,5 @@
 <template>
-	<view class="flex align-center" hover-class="bg-hover-light" @click="onClick(item)" @longpress="onLong">
+	<view :class="item.isTop ? 'bg-light' : 'bg-white'" class="flex align-center" hover-class="bg-hover-light" @click="onClick(item)" @longpress="onLong">
 		<view class="flex align-center justify-center position-relative" style="width: 145rpx;height: 135rpx;">
 			<MyAvatar :src="item.avatar"></MyAvatar>
 			<MyBadge v-if="item.num > 0" badgeClass="position-absolute" badgeStyle="top: 10rpx;right: 10rpx;" :num="item.num"></MyBadge>
@@ -22,6 +22,7 @@
 	export default {
 		props: {
 			item: Object,
+			index:Number
 		},
 		mixins:[mixin],
 		components: {
@@ -55,7 +56,7 @@
 				x = e.detail.x
 				y = e.detail.y
 				// #endif
-				this.$emit('long',{x,y})
+				this.$emit('long',{x,y,index:this.index})
 			}
 		}
 	}

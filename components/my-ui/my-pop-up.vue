@@ -3,7 +3,7 @@
 		<!-- 蒙版 -->
 		<div v-if="mask" @click="hide" class="position-fixed top-0 right-0 left-0 bottom-0" :style="getMaskColor"></div>
 		<!-- 弹出框内容 -->
-		<div ref="mypop" class="position-fixed bg-white my-animation" :style="getBodyStyle" :class="getBodyClass">
+		<div ref="mypop" class="position-fixed my-animation triangle" :style="getBodyStyle" :class="getBodyClass">
 			<slot></slot>
 		</div>
 	</div>
@@ -11,7 +11,7 @@
 
 <script>
 	// #ifdef APP-PLUS-NVUE
-		const animation = weex.requireModule('animation')
+	const animation = weex.requireModule('animation')
 	// #endif
 	export default {
 		props: {
@@ -39,6 +39,16 @@
 			bodyWidth: {
 				type: Number,
 				default: 0
+			},
+			//背景颜色
+			bodyBgColor: {
+				type: String,
+				default: 'bg-white'
+			},
+			//变形原点
+			originDrop: {
+				type: String,
+				default: 'left top'
 			}
 		},
 		data() {
@@ -57,7 +67,7 @@
 			},
 			getBodyClass() {
 				let fixBottom = this.fixBottom ? 'left-0 right-0 bottom-0' : 'rounded border'
-				return fixBottom
+				return `${this.bodyBgColor} ${fixBottom}`
 			},
 			getBodyStyle() {
 				let left = this.x > -1 ? `left:${this.x}px;` : ''
@@ -71,12 +81,12 @@
 				this.y = y > this.maxY ? this.maxY : y
 				this.status = true
 				//动画
-				// #ifdef APP-PLUS-NVUEc
+				// #ifdef APP-PLUS-NVUE
 				this.$nextTick(() => {
 					animation.transition(this.$refs.mypop, {
 						styles: {
 							transform: 'scale(1,1)',
-							transformOrigin: 'left top',
+							transformOrigin: this.originDrop,
 							opacity: 1,
 						},
 						duration: 200, //ms
@@ -84,7 +94,7 @@
 						needLayout: false,
 						delay: 0 //ms
 					}, function() {
-						console.log('动画执行完成')
+
 					})
 				})
 				// #endif 
@@ -94,7 +104,7 @@
 				animation.transition(this.$refs.mypop, {
 					styles: {
 						transform: 'scale(0,0)',
-						transformOrigin: 'left top',
+						transformOrigin: this.originDrop,
 						opacity: 0,
 					},
 					duration: 200, //ms
@@ -103,7 +113,6 @@
 					delay: 0 //ms
 				}, () => {
 					this.status = false
-					console.log('动画执行完成')
 				})
 				// #endif 
 				// #ifndef APP-PLUS-NVUE
