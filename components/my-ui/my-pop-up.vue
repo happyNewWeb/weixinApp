@@ -48,7 +48,6 @@
 			//变形原点
 			originDrop: {
 				type: String,
-				default: 'left top'
 			}
 		},
 		data() {

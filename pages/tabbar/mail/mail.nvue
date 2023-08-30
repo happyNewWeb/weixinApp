@@ -8,6 +8,17 @@
 				:title="item.title" 
 				:img-url="item.imgUrl">
 	</MyListItem>
+	<!-- 联系人 -->
+	<view v-for="(item,index) in list" :key="index">
+		<view class="py-2 px-3 border-bottom bg-light">
+			<text class="text-dark">{{item.letter}}</text>
+		</view>
+		<MyListItem v-for="(person,index) in item.data" 
+		            :title="person" 
+	                :key="index"
+					img-url="/static/images/images/mail/friend.png">
+		</MyListItem>
+	</view>
 </template>
 
 <script>
@@ -36,7 +47,8 @@
 						title:'标签',
 						event:''
 					}
-				]
+				],
+				list:[]
 			}
 		},
 		methods: {
@@ -48,6 +60,15 @@
 					   break;
 				}
 			}
+		},
+		mounted() {
+			let data = [];
+			for (let i = 65; i <= 90; i++) {
+			  let letter = String.fromCharCode(i);
+			  let item = { letter: letter, data: [letter,letter,letter,letter,letter,letter]};
+			  data.push(item);
+			}
+			this.list = data
 		}
 	}
 </script>

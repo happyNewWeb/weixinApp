@@ -22,7 +22,7 @@
 		<!-- 占位 -->
 		<view v-if="fixed" :style="fixedStyle"></view>
 		<!-- 扩展菜单 -->
-		<MyPopUp ref="extend" origin-drop="center center" body-bg-color="bg-dark" :mask-color="false" :body-height="525"
+		<MyPopUp ref="extend" origin-drop="right top" body-bg-color="bg-dark" :mask-color="false" :body-height="525"
 			:body-width="320">
 			<view class="flex pt-1 pb-1 flex-column" style="width: 320rpx;height: 525rpx;">
 				<view v-for="(item,index) in myExtends" @click="click(item.event)" :key="item.name"
