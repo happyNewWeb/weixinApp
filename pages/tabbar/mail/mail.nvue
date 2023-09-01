@@ -10,7 +10,7 @@
 	</MyListItem>
 	<!-- 联系人 -->
 	<view v-for="(item,index) in list" :key="index">
-		<view class="py-2 px-3 border-bottom bg-light">
+		<view v-if="item.data" class="py-2 px-3 border-bottom bg-light">
 			<text class="text-dark">{{item.letter}}</text>
 		</view>
 		<MyListItem v-for="(person,index) in item.data" 
@@ -20,6 +20,7 @@
 		</MyListItem>
 	</view>
 </template>
+
 
 <script>
 	import MyNavBar from '@/components/my-ui/my-nav-bar.vue'
@@ -65,8 +66,8 @@
 			let data = [];
 			for (let i = 65; i <= 90; i++) {
 			  let letter = String.fromCharCode(i);
-			  let item = { letter: letter, data: [letter,letter,letter,letter,letter,letter]};
-			  data.push(item);
+				  let item = { letter: letter, data: [letter,letter,letter,letter,letter,letter]};
+				  data.push(item);
 			}
 			this.list = data
 		}
