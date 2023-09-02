@@ -8,7 +8,7 @@
 		</block>
 		<!-- 非置顶列表 -->
 		<block v-for="(item,index) in list" :key="index">
-			<MyChatList v-if="!item.isTop" :item="item" @long="long" :index="index"></MyChatList>
+			<MyChatList v-if="!item.isTop" :item="item" @long="long" @click="toPage" :index="index"></MyChatList>
 		</block>
 		<!-- 弹出层 -->
 		<MyPopUp ref="pop" :mask-color="false" :body-height="getMenuStyle" :body-width="240">

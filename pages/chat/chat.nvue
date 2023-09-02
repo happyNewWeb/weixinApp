@@ -1,0 +1,50 @@
+<template>
+	<view>
+		<!-- 头部 -->
+		<myNavBar :isShowBack="true" title="昵称" noreadnum="1">
+			<myIconButton slot="right" :icon="'\ue6fd'"> </myIconButton>
+		</myNavBar>
+		<!-- 底部输入框 -->
+		<view class="position-fixed left-0 right-0 bottom-0 border-top flex align-center p-1" style="height:105rpx;background-color: #f7f7f6;">
+			<myIconButton slot="right" :icon="'\ue606'"> </myIconButton>
+			<view class="flex-1">
+				<textarea :maxlength="150" fixed class="border rounded p-2 bg-white font-md" style="height: 70rpx;"></textarea>
+			</view>
+			<myIconButton slot="right" :icon="'\ue605'"> </myIconButton>
+			<myIconButton slot="right" :icon="'\ue603'"> </myIconButton>
+		</view>
+		<!-- 聊天列表 -->
+		<scroll-view scroll-y="true" class="position-fixed left-0 right-0" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px'">
+			<view v-for="index in 30" class="px-4">{{index}}</view>
+		</scroll-view>
+	</view>
+</template>
+
+<script>
+    import myNavBar from '@/components/my-ui/my-nav-bar.vue'
+	import myIconButton from '@/components/my-ui/my-icon-button.vue'
+	export default {
+		components:{
+			myNavBar,
+			myIconButton
+		},
+		data() {
+			return {
+				navBarHeight:0
+			}
+		},
+		methods: {
+			
+		},
+		mounted() {
+			//#ifdef APP-PLUS-NVUE
+			const statusBarHeight = plus.navigator.getStatusbarHeight()
+			//#endif
+			this.navBarHeight = statusBarHeight + uni.upx2px(80)
+		}
+	}
+</script>
+
+<style>
+
+</style>

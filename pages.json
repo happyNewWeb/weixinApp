@@ -23,8 +23,10 @@
 
 			}
 
+		},{
+			"path": "pages/chat/chat"
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "微信",

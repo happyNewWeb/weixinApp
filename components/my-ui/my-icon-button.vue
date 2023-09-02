@@ -1,5 +1,5 @@
 <template>
-	<view @click="$emit('click')" hover-class="bg-hover-light" class="flex align-center justify-center" style="width: 70rpx;height: 70rpx;">
+	<view @click="$emit('click')" :hover-class="isShowHover ? 'bg-hover-light' : ''" class="flex align-center justify-center" style="width: 70rpx;height: 70rpx;">
 		<text class="iconfont font-md">{{icon}}</text>
 	</view>
 </template>
@@ -10,6 +10,10 @@
 			icon:{
 				type:String,
 				default:''
+			},
+			isShowHover:{
+				type:Boolean,
+				default:false
 			}
 		}
 	}

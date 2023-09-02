@@ -6,7 +6,9 @@
 			<!-- 导航 -->
 			<view class="w-100 flex justify-between align-center" style="height: 80rpx;">
 				<!-- 左边 -->
-				<view>
+				<view class="flex align-center">
+					<!-- 返回按钮 -->
+					<MyIconButton v-if="isShowBack" @click="back" :icon="'\ue60d'">{{getTitle}}</MyIconButton>
 					<!-- 标题 -->
 					<slot>
 						<text v-if="title" class="font-md ml-3">{{getTitle}}</text>
@@ -61,6 +63,10 @@
 			bgColor:{
 				type: String,
 				default: 'bg-bar'
+			},
+			isShowBack:{
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -98,6 +104,9 @@
 		methods: {
 			openExtend() {
 				this.$refs.extend.show(uni.upx2px(415), uni.upx2px(150))
+			},
+			back(){
+				uni.navigateBack()
 			}
 		},
 		computed: {

@@ -41,7 +41,9 @@
 		},
 		methods:{
 			onClick(item){
-				this.$emit('click',item)
+				uni.navigateTo({
+					url:`/pages/chat/chat`
+				})
 			},
 			onLong(e){
 				let x = 0
