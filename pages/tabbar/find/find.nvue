@@ -7,25 +7,25 @@
 				<myAvatar src="/static/images/images/mail/friend.png" size="65"></myAvatar>
 				<text class="rounded-circle bg-danger position-absolute" style="width: 20rpx;height: 20rpx;top:2rpx;right:2rpx;"></text>
 			</view>
-			<text slot="icon" class="iconfont font-lg">&#xe667;</text>
+			<text slot="icon" class="iconfont font-lg" style="color: #1e90ff">&#xe667;</text>
 		</MyListItem>
 		<myDivider></myDivider>
 		<MyListItem title="扫一扫" :isShowBottomLine="true" :is-show-right="true" @click="showTip">
-			<text slot="icon" class="iconfont font-lg">&#xe86d;</text>
+			<text slot="icon" class="iconfont font-lg" style="color: #1e90ff">&#xe86d;</text>
 		</MyListItem>
 		<MyListItem title="摇一摇" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
-			<text slot="icon" class="iconfont font-lg">&#xe63d;</text>
+			<text slot="icon" class="iconfont font-lg" style="color:#5352ed">&#xe63d;</text>
 		</MyListItem>
 		<myDivider></myDivider>
 		<MyListItem title="看一看" :isShowBottomLine="true" :is-show-right="true" @click="showTip">
-			<text slot="icon" class="iconfont font-lg">&#xe667;</text>
+			<text slot="icon" class="iconfont font-lg" style="color:#ff4757">&#xe667;</text>
 		</MyListItem>
 		<MyListItem title="搜一搜" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
-			<text slot="icon" class="iconfont font-lg">&#xe611;</text>
+			<text slot="icon" class="iconfont font-lg" style="color:#ff6348">&#xe611;</text>
 		</MyListItem>
 		<myDivider></myDivider>
-		<MyListItem title="小程序" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
-			<text slot="icon" class="iconfont font-lg">&#xe658;</text>
+		<MyListItem title="购物" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
+			<text slot="icon" class="iconfont font-lg" style="color: #ffa502;">&#xe658;</text>
 		</MyListItem>
 	</view>
 </template>
@@ -51,7 +51,7 @@
 			showTip(){
 				uni.showToast({
 					title:'敬请期待'
-				})
+				}) 
 			}
 		}
 	}

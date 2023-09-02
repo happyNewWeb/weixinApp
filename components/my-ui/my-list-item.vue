@@ -2,11 +2,13 @@
 	<view class="bg-white flex align-stretch" hover-class="bg-light" @click="$emit('click')">
 		<view class="flex align-center justify-between py-2 px-3">
 			<slot name="icon"></slot>
-			<image v-if="imgUrl" :src="imgUrl" mode="widthFix" style="width: 75rpx;height: 75rpx;">
+			<image v-if="imgUrl" :src="imgUrl" mode="widthFix" :style="getImgStyle">
 			</image>
 		</view>
 		<view :class="isShowBottomLine ? 'border-bottom' : ''" class="flex-1 flex align-center justify-between">
-			<text class="font-sm text-dark">{{title}}</text>
+			<slot name="title">
+				<text class="font-sm text-dark">{{title}}</text>
+			</slot>
 			<view class="flex align-center p-2" v-if="isShowRight">
 				<slot name="right"></slot>
 				<!-- 右箭头 -->
@@ -34,6 +36,14 @@
 			isShowBottomLine:{
 				type:Boolean,
 				default:true
+			},
+			imgSize:{
+				type:[String,Number],
+				default:75
+			},
+			fontSpace:{
+				type:String,
+				default:'10'
 			}
 		},
 		data() {
@@ -41,8 +51,13 @@
                 
 			}
 		},
-		methods: {
-
+		computed:{
+			getImgStyle(){
+				return `width:${this.imgSize}rpx;height:${this.imgSize}rpx;`
+			},
+			getFontSpace(){
+				return `letter-spacing:${this.fontSpace}rpx`
+			}
 		}
 	}
 </script>

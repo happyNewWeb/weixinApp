@@ -1,12 +1,12 @@
 <template>
 	<view>
-		<view class="bg-bar" :class="fixed?'fixed-top':''">
+		<view :class="getClass">
 			<!-- 状态栏 -->
 			<view :style="'height:'+statusBarHeight + 'px'"></view>
 			<!-- 导航 -->
 			<view class="w-100 flex justify-between align-center" style="height: 80rpx;">
 				<!-- 左边 -->
-				<view class="">
+				<view>
 					<!-- 标题 -->
 					<slot>
 						<text v-if="title" class="font-md ml-3">{{getTitle}}</text>
@@ -14,8 +14,10 @@
 				</view>
 				<!-- 右边 -->
 				<view class="flex">
-					<my-icon-button :icon="'\ue6e3'"></my-icon-button>
-					<my-icon-button @click="openExtend" :icon="'\ue682'"></my-icon-button>
+					<slot name="right">
+						<my-icon-button :icon="'\ue6e3'"></my-icon-button>
+						<my-icon-button @click="openExtend" :icon="'\ue682'"></my-icon-button>
+					</slot>
 				</view>
 			</view>
 		</view>
@@ -55,6 +57,10 @@
 			noreadnum: {
 				type: Number,
 				default: 0
+			},
+			bgColor:{
+				type: String,
+				default: 'bg-bar'
 			}
 		},
 		data() {
@@ -100,6 +106,10 @@
 			},
 			getTitle() {
 				return this.noreadnum > 0 ? `${this.title}(${this.noreadnum})` : `${this.title}`;
+			},
+			getClass(){
+				let fixed = this.fixed ? 'fixed-top' : ''
+				return `${this.bgColor} ${fixed}`
 			}
 		},
 		mounted() {

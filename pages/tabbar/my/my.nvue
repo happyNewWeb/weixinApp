@@ -1,11 +1,56 @@
 <template>
-	<view>
-		
+	<view class="page">
+		<MyNavBar bg-color="bg-white">
+			<MyIconBotton slot="right" :icon="'\ue6ed'"></MyIconBotton>
+		</MyNavBar>
+		<MyListItem img-size="120" 
+		            img-url="/static/images/images/mail/friend.png" 
+					title="朋友圈" 
+					:isShowBottomLine="false" 
+					@click="showTip">
+			<view slot="title" class="flex flex-column">
+				<text>微信名称</text>
+				<text class="mt-2 text-light-muted font-sm">微信号:xingjianqiang520</text>
+			</view>
+			<view slot="right">
+				<text class="iconfont font-md text-light-muted">&#xe614;</text>
+			</view>
+		</MyListItem>
+		<myDivider></myDivider>
+		<MyListItem title="支付" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
+			<text slot="icon" class="iconfont font-lg py-1" style="color: #ffa502">&#xe66c;</text>
+		</MyListItem>
+		<myDivider></myDivider>
+		<MyListItem title="收藏" :isShowBottomLine="true" :is-show-right="true" @click="showTip">
+			<text slot="icon" class="iconfont font-lg py-1" style="color: #FF887A;">&#xea2d;</text>
+		</MyListItem>
+		<MyListItem title="相册" :isShowBottomLine="true" :is-show-right="true" @click="showTip">
+			<text slot="icon" class="iconfont font-lg py-1" style="color: #3984BE;">&#xe608;</text>
+		</MyListItem>
+		<MyListItem title="表情" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
+			<text slot="icon" class="iconfont font-lg py-1" style="color: #54D45D;">&#xe605;</text>
+		</MyListItem>
+		<myDivider></myDivider>
+		<MyListItem title="设置" :isShowBottomLine="false" :is-show-right="true" @click="showTip">
+			<text slot="icon" class="iconfont font-lg py-1" style="color: #3984BE;">&#xe612;</text>
+		</MyListItem>
 	</view>
 </template>
 
 <script>
+	import MyNavBar from '@/components/my-ui/my-nav-bar.vue'
+	import MyIconBotton from '@/components/my-ui/my-icon-button.vue'
+	import MyListItem from '@/components/my-ui/my-list-item.vue'
+	import myDivider from '@/components/my-ui/my-divider.vue'
+	import myAvatar from '@/components/my-ui/my-avatar.vue'
 	export default {
+		components:{
+		   MyNavBar,
+		   MyIconBotton,
+		   MyListItem,
+		   myDivider,
+		   myAvatar
+		},
 		data() {
 			return {
 				
