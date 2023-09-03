@@ -8,14 +8,37 @@
 		<view class="position-fixed left-0 right-0 bottom-0 border-top flex align-center p-1" style="height:105rpx;background-color: #f7f7f6;">
 			<myIconButton slot="right" :icon="'\ue606'"> </myIconButton>
 			<view class="flex-1">
-				<textarea :maxlength="150" fixed class="border rounded p-2 bg-white font-md" style="height: 70rpx;"></textarea>
+				<textarea :maxlength="150" fixed class="border rounded p-2 bg-white font-md" style="height: 80rpx;"></textarea>
 			</view>
 			<myIconButton slot="right" :icon="'\ue605'"> </myIconButton>
 			<myIconButton slot="right" :icon="'\ue603'"> </myIconButton>
 		</view>
-		<!-- 聊天列表 -->
+		<!-- 聊天内容 -->
 		<scroll-view scroll-y="true" class="position-fixed left-0 right-0" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px'">
-			<view v-for="index in 30" class="px-4">{{index}}</view>
+			<!-- 聊天列表 -->
+			<view v-for="(item,index) in list" :key="index" class="px-2 py-1 flex align-start" :class="item.user_id === 1 ? 'justify-end mb-2' : 'justify-start mt-2'">
+				<!-- 好友 -->
+				<template v-if="item.user_id !== 1">
+					<myAvatar :src="item.avatar" size="70"></myAvatar>
+					<text class="iconfont text-white position-absolute icon-left-chat">&#xe609</text>
+				</template>
+				<view class="rounded ml-3 px-1 list-style" :class="item.user_id === 1 ? 'bg-chat-item mr-3':'bg-white ml-3'" style="max-width: 500rpx;">
+					<text class="font-md">{{item.data}}</text>
+				</view>
+				<!-- 本人 -->
+				<template v-if="item.user_id === 1">
+					<text class="iconfont position-absolute icon-right-chat">&#xe640</text>
+					<myAvatar :src="item.avatar" size="70"></myAvatar>
+				</template>
+			</view>
+			<!-- 聊天列表 -->
+			<!-- <view v-for="index in 5" class="p-1 flex align-start justify-end mb-2">
+				<text class="iconfont position-absolute icon-right-chat">&#xe640</text>
+				<view class="rounded mr-3 px-2 list-style" >
+					<text>aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</text>
+				</view>
+				<myAvatar src="/static/images/images/mail/friend.png" size="70"></myAvatar>
+			</view> -->
 		</scroll-view>
 	</view>
 </template>
@@ -23,14 +46,109 @@
 <script>
     import myNavBar from '@/components/my-ui/my-nav-bar.vue'
 	import myIconButton from '@/components/my-ui/my-icon-button.vue'
+	import myAvatar from '@/components/my-ui/my-avatar.vue'
 	export default {
 		components:{
 			myNavBar,
-			myIconButton
+			myIconButton,
+			myAvatar
 		},
 		data() {
 			return {
-				navBarHeight:0
+				navBarHeight:0,
+				list:[
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:2,
+						nickname:'xx',
+						type:'text',
+						data:'我爱wadadaw阿达达瓦大大伟大的'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					},
+					{
+						avatar:'/static/images/images/mail/friend.png',
+						user_id:1,
+						nickname:'xx',
+						type:'text',
+						data:'你好'
+					}
+				]
 			}
 		},
 		methods: {
@@ -45,6 +163,21 @@
 	}
 </script>
 
-<style>
-
+<style scoped>
+.list-style{
+	padding-top: 15rpx;
+	padding-bottom: 15rpx;
+}
+.icon-left-chat{
+	left: 98rpx;
+	top: 25rpx;
+}
+.icon-right-chat{
+	right: 98rpx;
+	top: 25rpx;
+	color: #95EC69;
+}
+.bg-chat-item{
+	background-color: #95EC69;
+}
 </style>
