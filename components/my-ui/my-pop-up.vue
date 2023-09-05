@@ -48,6 +48,11 @@
 			//变形原点
 			originDrop: {
 				type: String,
+				default:'top left'
+			},
+			tabbarHeight:{
+				type:Number,
+				default:0
 			}
 		},
 		data() {
@@ -76,8 +81,8 @@
 		},
 		methods: {
 			show(x = -1, y = -1) {
-				this.x = x > this.maxX ? this.maxX : x
-				this.y = y > this.maxY ? this.maxY : y
+				this.x = x > this.maxX ? this.maxX - 20 : x
+				this.y = y > this.maxY ? this.maxY - 20 : y
 				this.status = true
 				//动画
 				// #ifdef APP-PLUS-NVUE
@@ -121,7 +126,7 @@
 		},
 		mounted() {
 			const res = uni.getSystemInfoSync()
-			this.maxY = res.windowHeight - uni.upx2px(this.bodyHeight)
+			this.maxY = res.windowHeight - uni.upx2px(this.bodyHeight) - uni.upx2px(this.tabbarHeight)
 			this.maxX = res.windowWidth - uni.upx2px(this.bodyWidth)
 		}
 	}

@@ -1,158 +1,218 @@
 <template>
 	<view>
 		<!-- 头部 -->
-		<myNavBar :isShowBack="true" title="昵称" noreadnum="1">
-			<myIconButton slot="right" :icon="'\ue6fd'"> </myIconButton>
-		</myNavBar>
-		<!-- 底部输入框 -->
-		<view class="position-fixed left-0 right-0 bottom-0 border-top flex align-center p-1" style="height:105rpx;background-color: #f7f7f6;">
-			<myIconButton slot="right" :icon="'\ue606'"> </myIconButton>
-			<view class="flex-1">
-				<textarea :maxlength="150" fixed class="border rounded p-2 bg-white font-md" style="height: 80rpx;"></textarea>
-			</view>
-			<myIconButton slot="right" :icon="'\ue605'"> </myIconButton>
-			<myIconButton slot="right" :icon="'\ue603'"> </myIconButton>
-		</view>
+		<MyNavBar :isShowBack="true" title="昵称" noreadnum="1">
+			<MyIconButton slot="right" :icon="'\ue6fd'"> </MyIconButton>
+		</MyNavBar>
 		<!-- 聊天内容 -->
-		<scroll-view scroll-y="true" class="position-fixed left-0 right-0" style="bottom: 105rpx;" :style="'top:' + navBarHeight + 'px'">
-			<!-- 聊天列表 -->
-			<view v-for="(item,index) in list" :key="index" class="px-2 py-1 flex align-start" :class="item.user_id === 1 ? 'justify-end mb-2' : 'justify-start mt-2'">
-				<!-- 好友 -->
-				<template v-if="item.user_id !== 1">
-					<myAvatar :src="item.avatar" size="70"></myAvatar>
-					<text class="iconfont text-white position-absolute icon-left-chat">&#xe609</text>
-				</template>
-				<view class="rounded ml-3 px-1 list-style" :class="item.user_id === 1 ? 'bg-chat-item mr-3':'bg-white ml-3'" style="max-width: 500rpx;">
-					<text class="font-md">{{item.data}}</text>
-				</view>
-				<!-- 本人 -->
-				<template v-if="item.user_id === 1">
-					<text class="iconfont position-absolute icon-right-chat">&#xe640</text>
-					<myAvatar :src="item.avatar" size="70"></myAvatar>
-				</template>
-			</view>
-			<!-- 聊天列表 -->
-			<!-- <view v-for="index in 5" class="p-1 flex align-start justify-end mb-2">
-				<text class="iconfont position-absolute icon-right-chat">&#xe640</text>
-				<view class="rounded mr-3 px-2 list-style" >
-					<text>aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</text>
-				</view>
-				<myAvatar src="/static/images/images/mail/friend.png" size="70"></myAvatar>
-			</view> -->
+		<scroll-view scroll-y="true" class="position-fixed left-0 right-0" style="bottom: 105rpx;"
+			:style="'top:' + navBarHeight + 'px'">
+			<block v-for="(item,index) in list" :key="index">
+				<myChatItem @long="long" :item="item" :index="index"
+					:preTime="index > 0 ? list[index-1].create_time : ''"></myChatItem>
+			</block>
 		</scroll-view>
+		<!-- 弹出层 -->
+		<MyPopUp origin-drop="center center" :tabbar-height="105" ref="pop" :mask-color="false" :body-height="getMenuHeight" :body-width="240">
+			<view class="flex pt-1 pb-1 flex-column overflow-hidden" :style="getMenuStyle" style="width: 240rpx;">
+				<view v-for="(item,index) in getMenuList" @click="click(item.event)" :key="item.name" 
+				      hover-class="bg-bar" 
+					  class="flex-1 flex align-center justify-center overflow-hidden">
+				   <text class="font-md">{{item.name}}</text>	
+				</view>
+			</view>
+		</MyPopUp>
+		<!-- 底部输入框 -->
+		<view class="position-fixed left-0 right-0 bottom-0 border-top flex align-center p-1"
+			style="height:105rpx;background-color: #f7f7f6;">
+			<MyIconButton slot="right" :icon="'\ue606'"> </MyIconButton>
+			<view class="flex-1">
+				<textarea :maxlength="150" fixed class="border rounded p-2 bg-white font-md"
+					style="height: 80rpx;"></textarea>
+			</view>
+			<MyIconButton slot="right" :icon="'\ue605'"> </MyIconButton>
+			<MyIconButton slot="right" :icon="'\ue603'"> </MyIconButton>
+		</view>
 	</view>
 </template>
 
 <script>
-    import myNavBar from '@/components/my-ui/my-nav-bar.vue'
-	import myIconButton from '@/components/my-ui/my-icon-button.vue'
-	import myAvatar from '@/components/my-ui/my-avatar.vue'
+	import MyNavBar from '@/components/my-ui/my-nav-bar.vue'
+	import MyIconButton from '@/components/my-ui/my-icon-button.vue'
+	import MyChatItem from '@/components/my-ui/my-chat-item.vue'
+	import MyPopUp from '@/components/my-ui/my-pop-up.vue'
 	export default {
-		components:{
-			myNavBar,
-			myIconButton,
-			myAvatar
+		components: {
+			MyNavBar,
+			MyIconButton,
+			MyChatItem,
+			MyPopUp
 		},
 		data() {
 			return {
-				navBarHeight:0,
-				list:[
+				chatItemIndex:-1,
+				menu:[
 					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:2,
-						nickname:'xx',
-						type:'text',
-						data:'我爱wadadaw阿达达瓦大大伟大的'
+						name:'复制',
+						event:''
 					},
 					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
+						name:'发送给朋友',
+						event:''
 					},
 					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
+						name:'收藏',
+						event:''
 					},
 					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
+						name:'删除',
+						event:''
 					},
 					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
+						name:'多选',
+						event:''
 					},
 					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
-					},
-					{
-						avatar:'/static/images/images/mail/friend.png',
-						user_id:1,
-						nickname:'xx',
-						type:'text',
-						data:'你好'
+						name:'撤回',
+						event:''
 					}
+				],
+				navBarHeight: 0,
+				list: [{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 2,
+						nickname: 'xx',
+						type: 'text',
+						data: '我爱wadadaw阿达达瓦大大伟大的',
+						create_time: new Date().getTime() - 1000 * 50 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 1,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 44 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 2,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 38 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 1,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 32 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 2,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 26 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 1,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 20 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 2,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 14 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 1,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 20 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 2,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 20 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 1,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 15 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 2,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 10 * 60
+					},
+					{
+						avatar: '/static/images/images/mail/friend.png',
+						user_id: 1,
+						nickname: 'xx',
+						type: 'text',
+						data: '你好',
+						create_time: new Date().getTime() - 1000 * 5 * 60
+					},
 				]
 			}
 		},
+		computed:{
+			//动态获取菜单高度
+			getMenuHeight(){
+				let height = 80
+				return this.menu.length * height
+			},
+			//动态获取菜单样式
+			getMenuStyle(){
+				return `height:${this.getMenuHeight}rpx`
+			},
+			//是否是本人
+			isDoSelf(){
+				const id = 1;
+				let user_id = this.chatItemIndex > -1 ? this.list[this.chatItemIndex].user_id : 0
+				return user_id === id
+			},
+			//操作菜单
+			getMenuList(){
+				return this.menu.filter(v => {
+					if(v.name === '撤回' && !this.isDoSelf){
+						return false
+					}else{
+						return true
+					}
+				})
+			}
+		},
 		methods: {
-			
+			// 长按消息
+			long({x,y,index}){
+				this.chatItemIndex = index
+				this.$refs.pop.show(x,y)
+			},
+			click(event){
+				this.$refs.pop.hide()
+			},
 		},
 		mounted() {
 			//#ifdef APP-PLUS-NVUE
@@ -164,20 +224,5 @@
 </script>
 
 <style scoped>
-.list-style{
-	padding-top: 15rpx;
-	padding-bottom: 15rpx;
-}
-.icon-left-chat{
-	left: 98rpx;
-	top: 25rpx;
-}
-.icon-right-chat{
-	right: 98rpx;
-	top: 25rpx;
-	color: #95EC69;
-}
-.bg-chat-item{
-	background-color: #95EC69;
-}
+
 </style>
